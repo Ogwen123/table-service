@@ -1,0 +1,40 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRES_URL")
+}
+
+model table_contents {
+    id       String  @id(map: "table_contents_pk") @db.VarChar
+    table_id String? @db.VarChar
+    location String? @db.VarChar
+    content  String? @db.VarChar
+    tables   tables? @relation(fields: [table_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "table_contents_tables_id_fk")
+}
+
+model tables {
+    id             String           @id(map: "id") @db.VarChar
+    user_id        String?          @db.VarChar
+    name           String?          @db.VarChar
+    type           String?          @db.VarChar
+    rows           Int?
+    columns        Int?
+    created_at     DateTime?        @db.Date
+    table_contents table_contents[]
+    users          users?           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tables_users_id_fk")
+}
+
+model users {
+    id            String   @id(map: "users_pk") @db.VarChar
+    username      String?  @db.VarChar
+    name          String?  @db.VarChar
+    email         String?  @db.VarChar
+    password_hash String?  @db.VarChar
+    perm_flag     Int?
+    created_at    BigInt?
+    updated_at    BigInt?
+    tables        tables[]
+}
