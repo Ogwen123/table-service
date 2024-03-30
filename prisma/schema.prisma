@@ -22,7 +22,7 @@ model tables {
     type           String?          @db.VarChar
     rows           Int?
     columns        Int?
-    created_at     DateTime?        @db.Date
+    created_at     BigInt?
     table_contents table_contents[]
     users          users?           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tables_users_id_fk")
 }
