@@ -2,11 +2,10 @@ import express from "express"
 import dotenv from "dotenv"
 import bodyParser from "body-parser"
 
-import { prisma } from "./utils/db"
-import { now } from "./utils/utils"
 import get from "./routes/get/index"
 import save from "./routes/save"
 import search from "./routes/get/search"
+import _delete from "./routes/delete"
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () { return this.toString() }
@@ -21,7 +20,7 @@ app.use(bodyParser.json())
 
 app.use('/*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,POST,PATCH,DELETE,OPTIONS")
     res.header("Access-Control-Max-Age", "86400")
     next();
@@ -43,6 +42,10 @@ app.post("/api/get/search", (req, res) => {
 
 app.post("/api/save", (req, res) => {
     save(req, res)
+})
+
+app.delete("/api/delete", (req, res) => {
+    _delete(req, res)
 })
 
 app.listen(port, () => {
