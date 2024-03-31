@@ -17,6 +17,7 @@ export const verifyToken = async (token: string): Promise<VerifyResponse | false
     })
 
     if (!res.ok) {
+        res.json().then((data) => console.log(data))
         return false
     } else {
         return (await res.json()) as VerifyResponse
