@@ -1,5 +1,6 @@
 {
     "pages": {
         "table_page_size": 20
-    }
+    },
+    "search_result_size": 50
 }

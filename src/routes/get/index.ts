@@ -44,7 +44,12 @@ export default async (req: express.Request, res: express.Response) => {
             user_id: validToken.id
         },
         include: {
-            table_contents: true
+            table_contents: {
+                select: {
+                    location: true,
+                    content: true
+                }
+            }
         },
         skip: config.pages.table_page_size * data.page,
         take: config.pages.table_page_size

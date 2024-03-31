@@ -6,6 +6,7 @@ import { prisma } from "./utils/db"
 import { now } from "./utils/utils"
 import get from "./routes/get/index"
 import save from "./routes/save"
+import search from "./routes/get/search"
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () { return this.toString() }
@@ -34,6 +35,10 @@ app.get('/', (req, res) => {
 
 app.post("/api/get", (req, res) => {
     get(req, res)
+})
+
+app.post("/api/get/search", (req, res) => {
+    search(req, res)
 })
 
 app.post("/api/save", (req, res) => {
