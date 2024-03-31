@@ -8,7 +8,7 @@ export const verifyToken = async (token: string): Promise<VerifyResponse | false
     } else {
         url = "http://auth.owen-services.eu.org/api/"
     }
-
+    console.log(token)
     const res = await fetch(url + "verify-token", {
         method: "GET",
         headers: {
