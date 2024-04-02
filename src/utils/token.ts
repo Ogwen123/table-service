@@ -6,9 +6,10 @@ export const verifyToken = async (token: string): Promise<VerifyResponse | false
     if (process.env.ENVIRONMENT === "DEV") {
         url = "http://localhost:3000/api/"
     } else {
-        url = "http://auth.owen-services.eu.org/api/"
+        url = "http://auth-service:3000"
     }
     console.log(token)
+
     const res = await fetch(url + "verify-token", {
         method: "POST",
         headers: {
