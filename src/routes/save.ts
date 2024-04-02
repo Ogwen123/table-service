@@ -3,7 +3,7 @@ import express from "express";
 import { v4 as uuidv4 } from "uuid"
 
 import { prisma } from "../utils/db";
-import { now, validate } from "../utils/utils";
+import { iso, now, validate } from "../utils/utils";
 import { error, success } from "../utils/api";
 import { verifyToken } from "../utils/token";
 import type { TokenData } from "../global/types";
@@ -74,7 +74,7 @@ export default async (req: express.Request, res: express.Response) => {
             rows: data.rows,
             columns: data.columns,
             table_contents: { create: cells },
-            created_at: now()
+            created_at: iso()
         }
     })
 

@@ -22,7 +22,7 @@ model tables {
     type           String?          @db.VarChar
     rows           Int?
     columns        Int?
-    created_at     BigInt?
+    created_at     String?          @db.VarChar
     table_contents table_contents[]
     users          users?           @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "tables_users_id_fk")
 }
@@ -34,8 +34,8 @@ model users {
     email         String?  @db.VarChar
     password_hash String?  @db.VarChar
     perm_flag     Int?
-    created_at    BigInt?
-    updated_at    BigInt?
+    created_at    String?  @db.VarChar
+    updated_at    String?  @db.VarChar
     tables        tables[]
 }
 
