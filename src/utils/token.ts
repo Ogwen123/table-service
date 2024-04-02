@@ -6,7 +6,7 @@ export const verifyToken = async (token: string): Promise<VerifyResponse | false
     if (process.env.ENVIRONMENT === "DEV") {
         url = "http://localhost:3000/api/"
     } else {
-        url = "http://auth-service:3000"
+        url = "http://auth-service:3000/api/"
     }
     console.log(token)
 
