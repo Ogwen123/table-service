@@ -11,11 +11,12 @@ export const verifyToken = async (token: string): Promise<VerifyResponse | false
     console.log(token)
 
     const res = await fetch(url + "verify-token", {
-        method: "POST",
+        method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            //"Content-Type": "application/json"
+            "Authorization": "Bearer " + token
         },
-        body: JSON.stringify({ token: token })
+        //body: JSON.stringify({ token: token })
     })
 
     if (!res.ok) {
