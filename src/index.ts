@@ -29,15 +29,26 @@ app.use('/*', function (req, res, next) {
 });
 
 app.use("/api/*", async (req, res, next) => {
-    const enabled = (await prisma.services.findUnique({
+    let enabled
+    const enabledRes = (await prisma.services.findUnique({
         where: {
             id: "abc3d324-9055-4cb5-8c3e-34a3da32b847"
         },
         select: {
             enabled: true
         }
-    }))?.enabled
+    }))
 
+
+    if (enabledRes === undefined || enabledRes === null) {
+        enabled = true
+    } else {
+        enabled = enabledRes.enabled
+    }
+
+    //console.log(enabledRes)
+
+    //console.log(enabled)
     if (enabled) {
         next();
     } else {
@@ -56,7 +67,7 @@ app.get('/', async (req, res) => {
     }))?.enabled
 
     res.send({
-        "message": (enabled ? "API is running!" : "API is disabled!")
+        "message": (enabled ? "API is running." : "API is disabled.")
     })
 })
 
