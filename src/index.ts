@@ -2,10 +2,12 @@ import express from "express"
 import dotenv from "dotenv"
 import bodyParser from "body-parser"
 
+import { prisma } from "./utils/db"
 import get from "./routes/get/index"
 import save from "./routes/save"
 import search from "./routes/get/search"
 import _delete from "./routes/delete"
+import { error } from "./utils/api"
 
 //@ts-ignore
 BigInt.prototype.toJSON = function () { return this.toString() }
@@ -26,9 +28,35 @@ app.use('/*', function (req, res, next) {
     next();
 });
 
-app.get('/', (req, res) => {
+app.use("/api/*", async (req, res, next) => {
+    const enabled = (await prisma.services.findUnique({
+        where: {
+            id: "abc3d324-9055-4cb5-8c3e-34a3da32b847"
+        },
+        select: {
+            enabled: true
+        }
+    }))?.enabled
+
+    if (enabled) {
+        next();
+    } else {
+        error(res, 403, "This service is disabled.")
+    }
+});
+
+app.get('/', async (req, res) => {
+    const enabled = (await prisma.services.findUnique({
+        where: {
+            id: "abc3d324-9055-4cb5-8c3e-34a3da32b847"
+        },
+        select: {
+            enabled: true
+        }
+    }))?.enabled
+
     res.send({
-        "message": "API is running"
+        "message": (enabled ? "API is running!" : "API is disabled!")
     })
 })
 
