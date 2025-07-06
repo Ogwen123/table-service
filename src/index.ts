@@ -28,7 +28,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/api/*", async (req, res, next) => {
+app.use("/api/", async (req, res, next) => {
     let enabled
     const enabledRes = (await prisma.services.findUnique({
         where: {
